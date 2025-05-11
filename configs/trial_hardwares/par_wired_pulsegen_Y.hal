@@ -1,0 +1,112 @@
+# components
+loadrt threads name1="test_thread" period1=25000 
+#loadrt __test_thread  (not loaded by loadrt, no args saved)
+loadrt hal_parport cfg="0x8000 in 0x8800 out 0x9000 out" 
+loadrt siggen 
+loadrt encoder 
+loadrt stepgen step_type=0 
+# pin aliases
+# param aliases
+# signals
+# nets
+net dir stepgen.0.dir => parport.1.pin-03-out
+net phase_a parport.0.pin-02-in => encoder.0.phase-A
+net phase_b parport.0.pin-03-in => encoder.0.phase-B
+net phase_z parport.0.pin-04-in => encoder.0.phase-Z
+net puls stepgen.0.step => parport.1.pin-02-out
+# parameter values
+setp encoder.capture-position.tmax        23035
+setp encoder.update-counters.tmax        16746
+setp parport.0.pin-01-out-invert        FALSE
+setp parport.0.pin-01-out-reset        FALSE
+setp parport.0.pin-14-out-invert        FALSE
+setp parport.0.pin-14-out-reset        FALSE
+setp parport.0.pin-16-out-invert        FALSE
+setp parport.0.pin-16-out-reset        FALSE
+setp parport.0.pin-17-out-invert        FALSE
+setp parport.0.pin-17-out-reset        FALSE
+setp parport.0.read.tmax            0
+setp parport.0.reset.tmax            0
+setp parport.0.write.tmax            0
+setp parport.1.debug1   0x00000000
+setp parport.1.debug2   0x00000000
+setp parport.1.pin-01-out-invert        FALSE
+setp parport.1.pin-01-out-reset        FALSE
+setp parport.1.pin-02-out-invert        FALSE
+setp parport.1.pin-02-out-reset        FALSE
+setp parport.1.pin-03-out-invert        FALSE
+setp parport.1.pin-03-out-reset        FALSE
+setp parport.1.pin-04-out-invert        FALSE
+setp parport.1.pin-04-out-reset        FALSE
+setp parport.1.pin-05-out-invert        FALSE
+setp parport.1.pin-05-out-reset        FALSE
+setp parport.1.pin-06-out-invert        FALSE
+setp parport.1.pin-06-out-reset        FALSE
+setp parport.1.pin-07-out-invert        FALSE
+setp parport.1.pin-07-out-reset        FALSE
+setp parport.1.pin-08-out-invert        FALSE
+setp parport.1.pin-08-out-reset        FALSE
+setp parport.1.pin-09-out-invert        FALSE
+setp parport.1.pin-09-out-reset        FALSE
+setp parport.1.pin-14-out-invert        FALSE
+setp parport.1.pin-14-out-reset        FALSE
+setp parport.1.pin-16-out-invert        FALSE
+setp parport.1.pin-16-out-reset        FALSE
+setp parport.1.pin-17-out-invert        FALSE
+setp parport.1.pin-17-out-reset        FALSE
+setp parport.1.read.tmax            0
+setp parport.1.reset-time   0x00000000
+setp parport.1.reset.tmax            0
+setp parport.1.write.tmax            0
+setp parport.2.debug1   0x00000000
+setp parport.2.debug2   0x00000000
+setp parport.2.pin-01-out-invert        FALSE
+setp parport.2.pin-01-out-reset        FALSE
+setp parport.2.pin-02-out-invert        FALSE
+setp parport.2.pin-02-out-reset        FALSE
+setp parport.2.pin-03-out-invert        FALSE
+setp parport.2.pin-03-out-reset        FALSE
+setp parport.2.pin-04-out-invert        FALSE
+setp parport.2.pin-04-out-reset        FALSE
+setp parport.2.pin-05-out-invert        FALSE
+setp parport.2.pin-05-out-reset        FALSE
+setp parport.2.pin-06-out-invert        FALSE
+setp parport.2.pin-06-out-reset        FALSE
+setp parport.2.pin-07-out-invert        FALSE
+setp parport.2.pin-07-out-reset        FALSE
+setp parport.2.pin-08-out-invert        FALSE
+setp parport.2.pin-08-out-reset        FALSE
+setp parport.2.pin-09-out-invert        FALSE
+setp parport.2.pin-09-out-reset        FALSE
+setp parport.2.pin-14-out-invert        FALSE
+setp parport.2.pin-14-out-reset        FALSE
+setp parport.2.pin-16-out-invert        FALSE
+setp parport.2.pin-16-out-reset        FALSE
+setp parport.2.pin-17-out-invert        FALSE
+setp parport.2.pin-17-out-reset        FALSE
+setp parport.2.read.tmax            0
+setp parport.2.reset-time   0x00000000
+setp parport.2.reset.tmax            0
+setp parport.2.write.tmax            0
+setp parport.read-all.tmax        65121
+setp parport.write-all.tmax        54396
+setp siggen.0.update.tmax            0
+setp stepgen.0.dirhold   0x000061A8
+setp stepgen.0.dirsetup   0x000061A8
+setp stepgen.0.maxaccel            0
+setp stepgen.0.maxvel            0
+setp stepgen.0.position-scale            1
+setp stepgen.0.steplen   0x0000C350
+setp stepgen.0.stepspace   0x0000C350
+setp stepgen.capture-position.tmax        27117
+setp stepgen.make-pulses.tmax        19359
+setp stepgen.update-freq.tmax        21885
+setp test_thread.tmax        71738
+# realtime thread/function links
+addf parport.read-all test_thread
+addf parport.write-all test_thread
+addf encoder.capture-position test_thread
+addf encoder.update-counters test_thread
+addf stepgen.capture-position test_thread
+addf stepgen.make-pulses test_thread
+addf stepgen.update-freq test_thread

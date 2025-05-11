@@ -1,0 +1,15 @@
+loadrt scale count=1
+addf scale.0 servo-thread
+setp scale.0.gain 0.008
+net spindle-output => scale.0.in
+net spindle-speed-DAC scale.0.out => hm2_5i25.0.7i76.0.0.spinout
+
+net spindle-enable => hm2_5i25.0.7i76.0.0.spinena
+
+# ---Setup spindle at speed signals---
+
+loadrt timedelay count=1
+addf timedelay.0 servo-thread
+setp timedelay.0.on-delay 5
+net spindle-enable => timedelay.0.in
+net spindle-at-speed <= timedelay.0.out

@@ -1,0 +1,46 @@
+# Jog Pendant
+loadrt mux8 count=1
+addf mux8.0 servo-thread
+
+# For velocity mode, set to 1
+# In velocity mode the axis stops when the dial is stopped
+# even if that means the commanded motion is not completed,
+# For position mode (the default), set to 0
+# In position mode the axis will move exactly jog-scale
+# units for each count, regardless of how long that might take,
+setp axis.x.jog-vel-mode 0
+setp axis.y.jog-vel-mode 0
+setp axis.z.jog-vel-mode 0
+
+# This sets the scale that will be used based on the input to the mux4
+setp mux8.0.in1 0.025
+setp mux8.0.in2 0.0025
+setp mux8.0.in4 0.00025
+
+setp mux8.0.in0 0
+setp mux8.0.in3 0
+setp mux8.0.in5 0
+setp mux8.0.in6 0
+setp mux8.0.in7 0
+
+# The inputs to the mux4 component
+net scale1 mux8.0.sel0 <= hm2_5i25.0.7i76.0.0.input-20
+net scale2 mux8.0.sel1 <= hm2_5i25.0.7i76.0.0.input-21
+net scale3 mux8.0.sel2 <= hm2_5i25.0.7i76.0.0.input-22
+
+# The output from the mux4 is sent to each axis jog scale
+net mpg-scale <= mux8.0.out
+net mpg-scale => axis.x.jog-scale
+net mpg-scale => axis.y.jog-scale
+net mpg-scale => axis.z.jog-scale
+
+# The Axis select inputs
+net mpg-x axis.x.jog-enable <= hm2_5i25.0.7i76.0.0.input-16
+net mpg-y axis.y.jog-enable <= hm2_5i25.0.7i76.0.0.input-17
+net mpg-z axis.z.jog-enable <= hm2_5i25.0.7i76.0.0.input-18
+
+# The encoder output counts to the axis. Only the selected axis will move.
+net encoder-counts  <= hm2_5i25.0.encoder.00.count
+net encoder-counts => axis.x.jog-counts
+net encoder-counts => axis.y.jog-counts
+net encoder-counts => axis.z.jog-counts

@@ -1,0 +1,32 @@
+
+loadrt logic names=pause_interlock,resume_interlock personality=0x102,0x102
+addf resume_interlock servo-thread 
+addf pause_interlock servo-thread
+
+# external push buttons
+
+addf external-run-debounce.0 servo-thread
+addf external-stop-debounce.0 servo-thread
+
+# --- EXTERNAL PUSH BUTTON ---
+setp external-run-debounce.0.delay 100
+setp external-stop-debounce.0.delay 100
+
+net debounce-run hm2_5i25.0.7i76.0.0.input-28 => external-run-debounce.0.in
+net debounce-stop hm2_5i25.0.7i76.0.0.input-27 => external-stop-debounce.0.in
+
+
+# --- LOOP of RUN/STOP ---
+net external-run external-run-debounce.0.out => halui.program.run
+net external-stop external-stop-debounce.0.out => halui.program.stop
+
+# --- LOOP of PAUSE ---
+net pause_loop0 halui.program.is-running => pause_interlock.in-00
+net pause_loop1 hm2_5i25.0.7i76.0.0.input-29 => pause_interlock.in-01
+net pause_loop_out pause_interlock.and => halui.program.pause
+
+# --- LOOP of RESUME ---
+net resume_loop0 halui.program.is-paused => resume_interlock.in-00
+net resume_loop2 hm2_5i25.0.7i76.0.0.input-29-not => resume_interlock.in-01
+net resume_loop_out resume_interlock.and => halui.program.resume
+
