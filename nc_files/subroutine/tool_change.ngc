@@ -1,0 +1,17 @@
+o<tool_change> sub
+
+G0 G53 G90 Z[#<_ini[CHANGE_POSITION]Z>]
+G0 G53 G90 X[#<_ini[CHANGE_POSITION]X>]
+(move to tool changing position)
+
+M6 (use built in M6 behavior)
+
+(do tool probing)
+o<tool_sensor> call
+(print, tool length is #3)
+
+#<tool_number> = #5400
+G10 L1 P[#<tool_number>] Z[#3]
+
+o<tool_change> endsub
+m2
