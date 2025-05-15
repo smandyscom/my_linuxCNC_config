@@ -1,9 +1,11 @@
-o<tool_sensor> sub
+o<tool-sensor> sub
 
 #<max_probe> = #<_ini[TOOLSENSOR]maxprobe>
 #<search_vel> = #<_ini[TOOLSENSOR]search_vel>
 #<probe_vel> = #<_ini[TOOLSENSOR]probe_vel>
 #<sensor_height_G53> = #<_ini[TOOLSENSOR]height> (probed spindle nose in G53 machine coord.)
+;#<probed_height_G53> = 0
+;#<_cal_tool_length> = 0
 
 (print, max_probe is #<max_probe>)
 (print, search vel is #<search_vel>)
@@ -18,17 +20,18 @@ G91 (switch to incremental mode)
 
 ; this section commented out for sim
 G38.2 Z[-#<max_probe>] F#<search_vel> (probe down)
-G1 Z4.0 (move up 4 mm)
+G1 Z2.0 (move up 4 mm)
 G4 P0.5 (pause for 0.5 sec.)
 G38.2 Z-6.0 F#<probe_vel> (probe down slower)
 
 ; calculate in G53 machine coords
-#<probed_height_G53> = #5063 + #5223
-#<tool_length> = #<probed_height_G53> - #<sensor_height_G53>  
-(print, calculated tool length is #<tool_length>)
-#3 = #<tool_length> (store the value in global var for further using)
+#1 = [#5063 + #5223]
+(print, probed height is #1)
+#<_cal_tool_length> = [#1 - #<sensor_height_G53>]  
+(print, calculated tool length is #<_cal_tool_length>)
+#3 = #<_cal_tool_length> (store the value in global var for further using)
+(print, return with #3)
 
 G90 (absolute distance mode)
 G53 G0 Z10 (move Z up to 0)
-o<tool_sensor> endsub
-M2
+o<tool-sensor> endsub

@@ -1,24 +1,26 @@
-o<tool_change> sub
-
+o<tool-change> sub
+(debug, tool-change start)
 #<tool_in_spindle> = #5400
 #<selected_tool>   = #5401
 
-if [#<tool_in_spindle> NE #<selected_tool>]
+o101 if [#<tool_in_spindle> NE #<selected_tool>]
     (print, move to tool changing position)
     G0 G53 G90 Z[#<_ini[CHANGE_POSITION]Z>]
     G0 G53 G90 X[#<_ini[CHANGE_POSITION]X>]
     (move to tool changing position)
-end
+o101 endif
 
+(print, on built in M6)
 M6 (use built in M6 behavior)
+(print, off built in M6)
 
 (print, do tool probing)
-o<tool_sensor> call
+o<tool-sensor> call
 
 #<tool_length> = #3
 (print, tool length is #<tool_length>)
 
 G10 L1 P[#<tool_in_spindle>] Z[#<tool_length>]
 
-o<tool_change> endsub
+o<tool-change> endsub
 m2
