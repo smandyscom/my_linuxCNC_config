@@ -20,9 +20,15 @@ G91 (switch to incremental mode)
 
 ; this section commented out for sim
 G38.2 Z[-#<max_probe>] F#<search_vel> (probe down)
-G1 Z4.0 F#<search_vel> (move up)
+G38.4 Z[#<max_probe>] F#<search_vel> (probe off)
+
+G4 P0 (clear the queue?)
+G53 G1 Z2.0 F#<search_vel> (move off sensor)
 G4 P0.5 (pause for 0.5 sec.)
+
 G38.2 Z-6.0 F#<probe_vel> (probe down slower)
+G38.4 Z6 F#<probe_vel> (probe off)
+
 
 ; calculate in G53 machine coords
 #<probed_height_G53> = [#5063 + #5223]
