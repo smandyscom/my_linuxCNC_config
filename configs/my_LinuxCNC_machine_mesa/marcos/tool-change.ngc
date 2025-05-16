@@ -1,6 +1,5 @@
 o<tool-change> sub
 (debug, tool-change start)
-M5 
 (print, _current_tool #<_current_tool>)
 (print, _selected_tool #<_selected_tool>)
 
