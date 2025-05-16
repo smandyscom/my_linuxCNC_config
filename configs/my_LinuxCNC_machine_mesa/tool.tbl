@@ -1,6 +1,8 @@
 T0   P0   ;
-T1   P1   Z+35.237035 ;
+T1   P1   Z+35.246367 ;
 T2   P2   Z+35.243535 ;
 T3   P3   ;
 T10  P10  Z+33.805000 ;6mm end mill
-T11  P11  ;Added 20250414
+T11  P11  ;4mm end mill
+T12  P12  Z+25.059367 ;1mm end mill
+T13  P13  ;1/4R
