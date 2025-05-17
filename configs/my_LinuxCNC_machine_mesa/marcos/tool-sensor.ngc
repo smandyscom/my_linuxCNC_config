@@ -19,7 +19,6 @@ o<tool-sensor> sub
 G21 (use metric units)
 G53 G90 G0 Z[#<safe_height>] (raise spindle to Z0)
 G53 G90 G0 X#<_ini[TOOLSENSOR]x> Y#<_ini[TOOLSENSOR]y>
-G49 (cancel tool offset)
 G91 (switch to incremental mode)
 
 ; this section commented out for sim

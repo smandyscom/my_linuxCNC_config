@@ -3,6 +3,8 @@ o<tool-change> sub
 (print, _current_tool #<_current_tool>)
 (print, _selected_tool #<_selected_tool>)
 
+G49 (cancel tool offset)
+
 #<is_tool_change> = [#<_current_tool> NE #<_selected_tool>]
 
 O101 IF [#<is_tool_change>]
@@ -23,5 +25,6 @@ O102 IF [#<is_tool_change>]
     G10 L1 P[#<_current_tool>] Z[#<_cal_tool_length>]
 O102 ENDIF
 
+G43 (resume tool offset)
 (debug, tool-change finish)
 o<tool-change> endsub
