@@ -1,2 +1,1 @@
-configs/my_LinuxCNC_machine_mesa/linuxcnc.var.bak
-configs/my_LinuxCNC_machine_mesa/tool.tbl.bak
+*.bak

@@ -1,0 +1,4 @@
+o<swap-workpiece> sub
+(MSG, Moving Y-axis for workpiece removal UP)
+G53 G0 Y[#<_ini[SWAP_POSITION]Y>]
+o<swap-workpiece> endsub
