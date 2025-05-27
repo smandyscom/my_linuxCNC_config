@@ -1,0 +1,11 @@
+( Main program )
+
+#1 = 10      (xEnd)
+#2 = -1     (zFinal)
+#3 = 0.5       (zStep down)
+#4 = 300     (feedX)
+#5 = 200     (feedZ)
+
+O<wall-facing-xz> call 
+
+M2

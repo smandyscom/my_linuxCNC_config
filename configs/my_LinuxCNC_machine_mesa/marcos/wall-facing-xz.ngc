@@ -1,7 +1,13 @@
-o<wall_facing_XZ> sub (Side-wall facing in XZ plane — assumes X=0, Z=0 in G57)
-
-G90 G94
+(Side-wall facing in XZ plane — assumes X=0, Z=0 in G57)
+o<wall-facing-xz> sub
+(begin preamble)
+G17 G54 G40 G49 G80 G90
+G21
+(begin operation: Fixture)
+(machine units: mm/min)
 G57                 (Use work offset G57)
+G43                 (Activate tool length compensation)
+M3 S10000 
 
 #<xEnd>     = #1    (End X position)
 #<zFinal>   = #2    (Final Z depth, negative)
@@ -9,13 +15,16 @@ G57                 (Use work offset G57)
 #<feedX>    = #4    (Feedrate for X)
 #<feedZ>    = #5    (Feedrate for Z)
 
-#<zRetract> = 50    (Fixed machine Z height for retract)
+#<zRetract> = 10    (Fixed machine Z height for retract)
 #<zNow>     = 0     (Start from G57 Z=0)
 
-WHILE [#<zNow> GT #<zFinal>] DO1
+O100 WHILE [#<zNow> GT #<zFinal>] 
 
     #<zNow> = [#<zNow> - #<zStep>]
-    IF [#<zNow> LT #<zFinal>] THEN #<zNow> = #<zFinal>
+    
+O200 IF [#<zNow> LT #<zFinal>] 
+    #<zNow> = #<zFinal>
+O200 ENDIF
 
     G53 G0 Z#<zRetract>        (Retract to machine Z safe height)
     G0 X0                      (Rapid to start X=0)
@@ -23,8 +32,13 @@ WHILE [#<zNow> GT #<zFinal>] DO1
     G1 X#<xEnd> F#<feedX>      (Face pass along X)
     G53 G0 Z#<zRetract>        (Retract again)
 
-END1
+O100 ENDWHILE
 
-o<wall_facing_XZ> endsub
+G53 G0 Z#<zRetract>        (Retract again)
 
+(begin postamble)
+M05
+G17 G54 G90 G80 G40
 
+o<wall-facing-xz> endsub
+M2
