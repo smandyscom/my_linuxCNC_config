@@ -1,0 +1,30 @@
+o<wall_facing_XZ> sub (Side-wall facing in XZ plane — assumes X=0, Z=0 in G57)
+
+G90 G94
+G57                 (Use work offset G57)
+
+#<xEnd>     = #1    (End X position)
+#<zFinal>   = #2    (Final Z depth, negative)
+#<zStep>    = #3    (Step down increment)
+#<feedX>    = #4    (Feedrate for X)
+#<feedZ>    = #5    (Feedrate for Z)
+
+#<zRetract> = 50    (Fixed machine Z height for retract)
+#<zNow>     = 0     (Start from G57 Z=0)
+
+WHILE [#<zNow> GT #<zFinal>] DO1
+
+    #<zNow> = [#<zNow> - #<zStep>]
+    IF [#<zNow> LT #<zFinal>] THEN #<zNow> = #<zFinal>
+
+    G53 G0 Z#<zRetract>        (Retract to machine Z safe height)
+    G0 X0                      (Rapid to start X=0)
+    G1 Z#<zNow> F#<feedZ>      (Feed to current Z depth)
+    G1 X#<xEnd> F#<feedX>      (Face pass along X)
+    G53 G0 Z#<zRetract>        (Retract again)
+
+END1
+
+o<wall_facing_XZ> endsub
+
+
