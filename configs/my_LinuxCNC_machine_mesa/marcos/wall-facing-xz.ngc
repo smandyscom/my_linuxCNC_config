@@ -18,11 +18,14 @@ M3 S10000
 #<zRetract> = 10    (Fixed machine Z height for retract)
 #<zNow>     = 0     (Start from G57 Z=0)
 
+(debug, #<zNow> , #<zFinal>)
 O100 WHILE [#<zNow> GT #<zFinal>] 
 
+(debug, O100)
     #<zNow> = [#<zNow> - #<zStep>]
     
 O200 IF [#<zNow> LT #<zFinal>] 
+    (debug, O200)
     #<zNow> = #<zFinal>
 O200 ENDIF
 
@@ -34,6 +37,7 @@ O200 ENDIF
 
 O100 ENDWHILE
 
+(debug, ENDWHILE)
 G53 G0 Z#<zRetract>        (Retract again)
 
 (begin postamble)

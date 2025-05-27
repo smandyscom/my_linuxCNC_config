@@ -1,11 +1,13 @@
 ( Main program )
 
-#1 = 10      (xEnd)
-#2 = -1     (zFinal)
-#3 = 0.5       (zStep down)
-#4 = 300     (feedX)
-#5 = 200     (feedZ)
+#<xEnd>     = 150
+#<zFinal>   = -29.4
+#<zStep>    = 0.5
+#<feedX>    = 800
+#<feedZ>    = 150
 
-O<wall-facing-xz> call 
+(debug, start o)
+O<wall-facing-xz> call [#<xEnd>] [#<zFinal>] [#<zStep>] [#<feedX>] [#<feedZ>]
+(debug, stop o)
 
-M2
+M30
