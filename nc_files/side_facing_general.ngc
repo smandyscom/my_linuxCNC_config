@@ -1,0 +1,13 @@
+( Main program )
+
+#<xEnd>     = 150
+#<zFinal>   = -28
+#<zStep>    = 1
+#<feedX>    = 800
+#<feedZ>    = 250
+
+(debug, start o)
+O<wall-facing-xz> call [#<xEnd>] [#<zFinal>] [#<zStep>] [#<feedX>] [#<feedZ>]
+(debug, stop o)
+
+M30

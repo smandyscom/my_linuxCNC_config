@@ -15,7 +15,7 @@ M3 S10000
 #<feedX>    = #4    (Feedrate for X)
 #<feedZ>    = #5    (Feedrate for Z)
 
-#<zRetract> = 10    (Fixed machine Z height for retract)
+#<zRetract> = 5    (Fixed machine Z height for retract)
 #<zNow>     = 0     (Start from G57 Z=0)
 
 (debug, #<zNow> , #<zFinal>)
@@ -29,16 +29,18 @@ O200 IF [#<zNow> LT #<zFinal>]
     #<zNow> = #<zFinal>
 O200 ENDIF
 
-    G53 G0 Z#<zRetract>        (Retract to machine Z safe height)
+    G0 Z#<zRetract>        (Retract to Z safe height in G57)
     G0 X0                      (Rapid to start X=0)
+
     G1 Z#<zNow> F#<feedZ>      (Feed to current Z depth)
     G1 X#<xEnd> F#<feedX>      (Face pass along X)
-    G53 G0 Z#<zRetract>        (Retract again)
+
+    G0 Z#<zRetract>        (Retract again)
 
 O100 ENDWHILE
 
 (debug, ENDWHILE)
-G53 G0 Z#<zRetract>        (Retract again)
+G0 Z#<zRetract>        (Retract again)
 
 (begin postamble)
 M05
