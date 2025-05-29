@@ -29,10 +29,21 @@ G4 P[#<dwell_move_off>] (pause for 0.5 sec.)
 G38.2 Z[#<slow_down_probe>] F#<probe_vel> (probe down slower)
 
 ; calculate in G53 machine coords
-#<probed_height_G53> = [#5063 + #5223]
-(print, probed height is #1)
+#<coord_index> = [#5220 - 1] (0: G54, 1:G55 ...so on)
+#<coord_index> = [#<coord_index> * 20] (0 : G54, 20:G55, 40:G56... son)
+#<coord_index> = [#<coord_index> + 5223]
+(debug, coord_index #<coord_index>)
+#<probed_height_G53> = [#5063 + #[#<coord_index>]]
+(debug, 5063 #5063)
+(debug, probed height is #<probed_height_G53>)
 #<_cal_tool_length> = [#<probed_height_G53> - #<sensor_height_G53>]  
-(print, calculated tool length is #<_cal_tool_length>)
+(debug, calculated tool length is #<_cal_tool_length>)
+
+O100 IF [#<_cal_tool_length> LT 10]
+    M0 (Ask for user handling)
+    M1 
+    (Debug, Error of tool length #<_cal_tool_length>)
+O100 ENDIF
 
 G90 (absolute distance mode)
 G53 G0 Z[#<safe_height>] (move Z up to 0)

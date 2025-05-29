@@ -1,9 +1,9 @@
 ( Main program )
 
-#<xEnd>     = 150
-#<zFinal>   = -28
+#<xEnd>     = 142
+#<zFinal>   = -28.5
 #<zStep>    = 1
-#<feedX>    = 800
+#<feedX>    = 1200
 #<feedZ>    = 250
 
 (debug, start o)

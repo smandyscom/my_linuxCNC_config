@@ -2,14 +2,14 @@
 G21           (Metric units)
 G17           (XY plane)
 G90           (Absolute mode)
-G0 Z5         (Safe height)
-
+G53 G0 Z5         (Safe height)
+G49
 #1 = 10.0      (Pass X value)
 #2 = 20.0      (Pass Y value)
 
 O<tool-sensor> CALL     (Call subroutine with 2 args)
 
 #<result> = #3               (Receive result from subroutine)
-(print, Returned result is #<_cal_tool_length>)
+(debug, Returned result is #<_cal_tool_length>)
 
 M2
