@@ -1,13 +1,21 @@
 ( Main program )
-
-#<xEnd>     = 142
+(in G57)
+#<xEnd>     = 150
 #<zFinal>   = -28.5
 #<zStep>    = 1
 #<feedX>    = 1200
 #<feedZ>    = 250
 
+(Workpiece position in X-2)
+(For BRICK, cut of in Y-33)
+
+G61.1 (Activate EXACT STOP MODE)
+
 (debug, start o)
 O<wall-facing-xz> call [#<xEnd>] [#<zFinal>] [#<zStep>] [#<feedX>] [#<feedZ>]
 (debug, stop o)
+
+G57 
+G0 G90 x-2 (Ready for next round) 
 
 M30
