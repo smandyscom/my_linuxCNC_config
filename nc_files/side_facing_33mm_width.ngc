@@ -21,7 +21,7 @@ G57 (all work in G57)
 G90 
 (To start position)
 G0 Z#<zSafe>
-G0 X<xStart> Y#<yStart>
+G0 X#<xStart> Y#<yStart>
 
 (debug, start o)
 O<wall-facing-xz> call [#<xEnd>] [#<zFinal>] [#<zStep>] [#<feedX>] [#<feedZ>]
