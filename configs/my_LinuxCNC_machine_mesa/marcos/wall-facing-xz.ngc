@@ -1,4 +1,4 @@
-(Side-wall facing in XZ plane — assumes X=0, Z=0 in G57)
+(Side-wall facing in XZ plane — assumes X=0, Z=0, caller determine WCS)
 o<wall-facing-xz> sub
 (begin preamble)
 G17  (Select XY plane)
@@ -19,7 +19,11 @@ M3 S10000
 #<feedZ>    = #5    (Feedrate for Z)
 
 #<zRetract> = 5    (Fixed machine Z height for retract)
-#<zNow>     = 0     (Start from G57 Z=0)
+#<zNow>     = 0     (Start from Z=0)
+#<xNow>     = 0     (Start from X=0)
+
+G0 Z#<zRetract>        (Retract to Z safe height as beginnering)
+G0 X0                  (Rapid to start X=0)
 
 (debug, #<zNow> , #<zFinal>)
 O100 WHILE [#<zNow> GT #<zFinal>] 
@@ -32,18 +36,20 @@ O200 IF [#<zNow> LT #<zFinal>]
     #<zNow> = #<zFinal>
 O200 ENDIF
 
-    G0 Z#<zRetract>        (Retract to Z safe height in G57)
-    G0 X0                      (Rapid to start X=0)
-
     G1 Z#<zNow> F#<feedZ>      (Feed to current Z depth)
-    G1 X#<xEnd> F#<feedX>      (Face pass along X)
 
-    G0 Z#<zRetract>        (Retract again)
+O201 IF [#<xNow> EQ 0]
+    G1 X#<xEnd> F#<feedX>      (Face pass along X til End)
+    #<xNow> = #<xEnd>          (Memorize)
+O201 ELSE
+    G1 X0 F#<feedX>            (Face pass along X til 0)
+    #<xNow> = 0                (Memorize)
+O201 ENDIF
 
 O100 ENDWHILE
 
 (debug, ENDWHILE)
-G0 Z#<zRetract>        (Retract again)
+G0 Z#<zRetract>        (Retract at end)
 
 M05 (Spindle off)
 
