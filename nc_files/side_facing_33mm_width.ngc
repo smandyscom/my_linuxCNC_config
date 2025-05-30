@@ -1,0 +1,34 @@
+( Main program )
+
+
+#<xEnd>     = 150
+#<zFinal>   = -28.5
+#<zStep>    = 1
+#<feedX>    = 1200
+#<feedZ>    = 250
+
+#<zSafe>    = 5
+#<yStart>   = -33
+#<xStart>   = 0
+
+#<xReload>  = -2
+#<zReload>  = -5
+
+(Workpiece position in X-2)
+(For BRICK, cut of in Y-33)
+
+G57 (all work in G57)
+G90 
+(To start position)
+G0 Z#<zSafe>
+G0 X<xStart> Y#<yStart>
+
+(debug, start o)
+O<wall-facing-xz> call [#<xEnd>] [#<zFinal>] [#<zStep>] [#<feedX>] [#<feedZ>]
+(debug, stop o)
+
+G57 
+G0 G90 x#<xReload> (Ready for next round) 
+G0 G90 z#<zReload> (Ready for next round) 
+
+M30

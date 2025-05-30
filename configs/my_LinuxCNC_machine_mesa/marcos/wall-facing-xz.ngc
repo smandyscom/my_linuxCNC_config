@@ -1,12 +1,15 @@
 (Side-wall facing in XZ plane — assumes X=0, Z=0 in G57)
 o<wall-facing-xz> sub
 (begin preamble)
-G17 G54 G40 G49 G80 G90
-G21
-(begin operation: Fixture)
-(machine units: mm/min)
-G57                 (Use work offset G57)
+G17  (Select XY plane)
+G40  (Compensation off)
+G80  (Cancel CANNED cycle)    
+G90  (Use ABS mode)
+G21  (Units in mm)
+
+G61.1 (Activate EXACT STOP MODE)
 G43                 (Activate tool length compensation)
+
 M3 S10000 
 
 #<xEnd>     = #1    (End X position)
@@ -42,9 +45,8 @@ O100 ENDWHILE
 (debug, ENDWHILE)
 G0 Z#<zRetract>        (Retract again)
 
-(begin postamble)
-M05
-G17 G54 G90 G80 G40
+M05 (Spindle off)
 
+(Stop at zRetract position)
 o<wall-facing-xz> endsub
 M2
