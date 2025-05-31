@@ -1,0 +1,58 @@
+(Side-wall facing in YZ plane — assumes Y=0, Z=0, caller determine WCS)
+o<wall-facing-yz> sub
+(begin preamble)
+G17  (Select XY plane)
+G40  (Compensation off)
+G80  (Cancel CANNED cycle)    
+G90  (Use ABS mode)
+G21  (Units in mm)
+
+G61.1 (Activate EXACT STOP MODE)
+G43                 (Activate tool length compensation)
+
+M3 S10000 
+
+#<yEnd>     = #1    (End Y position)
+#<zFinal>   = #2    (Final Z depth, negative)
+#<zStep>    = #3    (Step down increment)
+#<feedY>    = #4    (Feedrate for Y)
+#<feedZ>    = #5    (Feedrate for Z)
+
+#<zRetract> = 5    (Fixed machine Z height for retract)
+#<zNow>     = 0     (Start from Z=0)
+#<yNow>     = 0     (Start from Y=0)
+
+G0 Z#<zRetract>        (Retract to Z safe height as beginnering)
+G0 Y0                  (Rapid to start Y=0)
+
+(debug, #<zNow> , #<zFinal>)
+O100 WHILE [#<zNow> GT #<zFinal>] 
+
+(debug, O100)
+    #<zNow> = [#<zNow> - #<zStep>]
+    
+O200 IF [#<zNow> LT #<zFinal>] 
+    (debug, O200)
+    #<zNow> = #<zFinal>
+O200 ENDIF
+
+    G1 Z#<zNow> F#<feedZ>      (Feed to current Z depth)
+
+O201 IF [#<yNow> EQ 0]
+    G1 Y#<yEnd> F#<feedY>      (Face pass along Y til End)
+    #<yNow> = #<yEnd>          (Memorize)
+O201 ELSE
+    G1 Y0 F#<feedY>            (Face pass along Y til 0)
+    #<yNow> = 0                (Memorize)
+O201 ENDIF
+
+O100 ENDWHILE
+
+(debug, ENDWHILE)
+G0 Z#<zRetract>        (Retract at end)
+
+M05 (Spindle off)
+
+(Stop at zRetract position)
+o<wall-facing-yz> endsub
+M2
