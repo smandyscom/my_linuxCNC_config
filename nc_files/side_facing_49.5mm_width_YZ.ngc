@@ -13,7 +13,7 @@
 
 #<xReload>  = -2
 #<yReload>  = [#<yEnd> / 2]
-#<zReload>  = -5
+#<zReload>  = 0
 
 (Workpiece position in X-2)
 (For BRICK, cut of in X 49.5)
@@ -27,7 +27,7 @@ G0 X#<xStart> Y#<yStart>
 M1  (MSG, for first time setting)
 
 (debug, start o)
-O<wall-facing-xz> call [#<yEnd>] [#<zFinal>] [#<zStep>] [#<feedY>] [#<feedZ>]
+O<wall-facing-yz> call [#<yEnd>] [#<zFinal>] [#<zStep>] [#<feedY>] [#<feedZ>]
 (debug, stop o)
 
 G58
